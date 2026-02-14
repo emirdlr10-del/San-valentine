@@ -6,7 +6,6 @@
 
 <style>
 
-/* Fondo romántico animado */
 body {
   margin: 0;
   padding: 0;
@@ -25,12 +24,33 @@ body {
   100% {background-position: 0% 50%;}
 }
 
+/* Botón música */
+#musicButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  color: #ff1a66;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+  z-index: 999;
+}
+
+#musicButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px white;
+}
+
 /* Caja principal */
 #lovePoem {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
   padding: 40px;
-  margin: 50px auto;
+  margin: 80px auto 50px auto;
   width: 85%;
   max-width: 750px;
   border-radius: 25px;
@@ -91,31 +111,79 @@ button:hover {
   font-weight: bold;
 }
 
+/* Imagen sorpresa */
+#finalImage {
+  display: none;
+  margin-top: 30px;
+  animation: fadeIn 2s ease;
+}
+
+#finalImage img {
+  width: 300px;
+  max-width: 80%;
+  border-radius: 20px;
+  box-shadow: 0 0 30px white;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.8);}
+  to {opacity: 1; transform: scale(1);}
+}
+
 </style>
 </head>
 
 <body>
 
+<button id="musicButton" onclick="toggleMusic()">🎵 Activar música</button>
+
+<audio id="bgMusic" loop>
+  <source src="cancion.mp3" type="audio/mpeg">
+</audio>
+
 <div id="lovePoem">
-Feliz San Valentín número 5, mi bomlita preciosa 💕<br><br>
+    Feliz San Valentín número 5, mi bomlita preciosa<br><br>
 
-Me llena el corazón poder compartir un San Valentín más contigo.<br>
-Tú me has regalado los días más felices de mi vida.<br>
-Estamos formando una familia llena de amor,<br>
-y eso es lo más valioso que tengo.<br><br>
+    Me llena el corazón poder compartir un San Valentín más contigo.<br>
+    Tal vez no sea el regalo más grande o lujoso, pero te lo doy con todo mi amor,<br>
+    porque lo más importante es lo que siento por ti.<br><br>
 
-Gracias por estar conmigo, por todo lo que haces por Maddi y por mí.<br>
-Te mereces el mundo entero y voy a trabajar cada día para dártelo.<br><br>
+    Hoy quiero aprovechar para recordarte cuánto te amo<br>
+    y lo increíblemente importante que eres para mí.<br>
+    Tú me has regalado los días más felices de mi vida.<br>
+    A tu lado he aprendido lo que significa amar de verdad,<br>
+    construir, crecer y soñar juntos.<br>
+    Estamos formando una familia llena de amor,<br>
+    y eso es lo más valioso que tengo.<br><br>
 
-Me encanta todo de ti, pero sobre todo tu esencia.<br>
-Tu risa, tus caricias, tus besos y hasta tus ronroneos al dormir.<br>
-Eres todo lo que siempre quise y más.<br><br>
+    Gracias por estar conmigo un año más.<br>
+    Gracias por todo lo que haces por Maddi y por mí,<br>
+    por tu paciencia, tu entrega y tu corazón tan noble.<br>
+    Te mereces el mundo entero,<br>
+    y te prometo que voy a trabajar cada día para dártelo,<br>
+    para que nunca te falte nada<br>
+    y para seguir construyendo la vida que soñamos juntos.<br><br>
 
-Te amo con todo mi corazón y mi pancita.<br>
-Eres el amor de mi vida, hoy y siempre.<br><br>
+    Me encanta todo de ti: tus ojos, tu boca, tu pelo,<br>
+    tus manos, tus pies, tu cuerpo…<br>
+    pero sobre todo me encanta tu esencia.<br>
+    Me enamora tu forma de pensar,<br>
+    tu manera de hablar, tu risa,<br>
+    tus ronroneos al dormir, tus caricias y tus besos.<br>
+    No me alcanzaría el tiempo ni las hojas<br>
+    para escribir cada cosa que amo de ti.<br>
+    Eres todo lo que siempre quise y más<br>
+    de lo que alguna vez imaginé.<br><br>
 
-Tu Pashon 💕
-</div>
+    Quiero que sepas que siempre estaré contigo y para ti.<br>
+    Que puedes contar conmigo en los días felices y en los difíciles.<br>
+    Mi amor por ti es leal, es profundo y es para siempre.<br><br>
+
+    Te amo con todo mi corazón y con toda mi pancita.<br>
+    Eres el amor de mi vida, hoy y todos los días que me queden por vivir.<br><br>
+
+    Con todo mi amor,<br>
+    Tu Pashon 💕<br>
 
 <div id="heart">
 ❤ <span id="name">Bomlita</span>
@@ -129,72 +197,44 @@ Tu Pashon 💕
 
 <div id="responseMessage"></div>
 
-<script>
-let attempts = 0;
-let loveQuotes = [
-  "Eres el sol que alegra mi día.",
-  "Tu amor es la melodía en mi corazón.",
-  "En tus brazos encuentro mi hogar.",
-  "Cada momento contigo es un sueño hermoso.",
-  "Tú y yo, una historia de amor escrita en las estrellas."
-];
+<!-- IMAGEN FINAL -->
+<div id="finalImage">
+  <h2>💖 Para siempre tú y yo 💖</h2>
+  <img src="sorpresa.jpg" alt="Nuestra foto">
+</div>
 
+<script>
+
+let attempts = 0;
 let yesSelected = false;
+
+function toggleMusic() {
+  const music = document.getElementById("bgMusic");
+  const button = document.getElementById("musicButton");
+
+  if (music.paused) {
+    music.play();
+    button.innerHTML = "🔇 Pausar música";
+  } else {
+    music.pause();
+    button.innerHTML = "🎵 Activar música";
+  }
+}
 
 function displayMessage(response) {
   const responseMessage = document.getElementById('responseMessage');
   const noButton = document.getElementById('noButton');
+  const finalImage = document.getElementById('finalImage');
 
   if (yesSelected) return;
 
   if (response === 'yes') {
-    const randomIndex = Math.floor(Math.random() * loveQuotes.length);
-    responseMessage.innerHTML = loveQuotes[randomIndex] + " 💖";
+    responseMessage.innerHTML = "Sabía que dirías que sí 💖✨";
     noButton.disabled = true;
     yesSelected = true;
     createExplosion();
+    finalImage.style.display = "block";
   } else {
     if (attempts < 2) {
       responseMessage.innerHTML = "Creo que te equivocaste 😏 intenta otra vez...";
-    } else {
-      responseMessage.innerHTML = "La respuesta correcta es «Sí» mi bomlita 💕";
-    }
-    attempts++;
-  }
-
-  responseMessage.style.display = 'block';
-}
-
-/* Corazones flotando constantes */
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.classList.add("heartFloat");
-  heart.innerHTML = "❤";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 15 + "px";
-  document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 6000);
-}, 500);
-
-/* Explosión cuando dice Sí */
-function createExplosion() {
-  for (let i = 0; i < 30; i++) {
-    const heart = document.createElement("div");
-    heart.classList.add("heartFloat");
-    heart.innerHTML = "💖";
-    heart.style.left = 50 + "vw";
-    heart.style.fontSize = "25px";
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-      heart.remove();
-    }, 4000);
-  }
-}
-</script>
-
-</body>
-</html>
+    } els
